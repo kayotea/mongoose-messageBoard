@@ -16,13 +16,13 @@ var Schema = mongoose.Schema;
 //define MessageSchema
 var MessageSchema = new mongoose.Schema({
     mess_text: {type: String, required: [true, 'A message is required.']},
-    user: {type: String, required: [true, 'Your name is required.']},
+    user: {type: String, required: [true, 'Your name is required.'], minlength: [4, 'Name must be at least 4 characters']},
     comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}]
 });
 //define CommentSchema
 var CommentSchema = new mongoose.Schema({
     comm_text: {type: String, required: [true, 'A comment is required.']},
-    user: {type: String, required: [true, 'Your name is required.']},
+    user: {type: String, required: [true, 'Your name is required.'], minlength: [4, 'Name must be at least 4 characters']},
     _message: {type: Schema.Types.ObjectId, ref: 'Message'}
 })
 //set models to schemas
@@ -41,6 +41,15 @@ Routes
 */
 // Root Request
 app.get('/', function(req, res) {
+    // Message.find({})
+    // .then((data)=> {
+    //     console.log('messages retrieved');
+    //     res.render('index', {messages: data});
+    // })
+    // .catch((err)=>{
+    //     console.log('error!
+    //     res.render('index', {title: 'you have errors!', errors: user.err});
+    // })
     Message.find({})
         .populate('comments')
         .exec(function(err, messages){
@@ -58,7 +67,15 @@ app.get('/', function(req, res) {
 });
 //add new message
 app.post('/message/new', function(req, res){
-    // var message = new Message({user: req.body.name, mess_text: req.body.message});
+    // Message.create(req.body)
+    // .then((data)=>{
+    //     console.log('message added');
+    //     res.redirect('/')
+    // })
+    // .catch((error)=>{
+    //     console.log('error adding message');
+    //     res.redirect('/')
+    // });
     var message = new Message(req.body);
     message.save(function(err){
         if (err) {
