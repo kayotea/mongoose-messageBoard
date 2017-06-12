@@ -1,0 +1,22 @@
+*{
+    margin: 0px;
+}
+
+#wrapper{
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    padding: 20px;
+}
+
+h2{
+    margin: 20px;
+}
+h3, h4{
+    margin: 10px;
+}
+input, textarea, label{
+    margin: 5px;
+}
+p{
+    margin: 10px 30px;
+    font-size: 90%;
+}

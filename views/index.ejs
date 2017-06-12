@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Root Page</title>
+        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type ="text/javascript">
+            // $(document).ready(function (){
+            //     document.getElementById("to_quotes").onclick = function () {
+            //         location.href = "/quotes";
+            //     };
+            // });
+        </script>-->
+        <!--<script src="/jquery/dist/jquery.js"></script>-->
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <div id="wrapper">
+        <h2>The Dojo Message Board</h2>
+        <hr>
+        <br>
+        <form action="/message/new" method="post">
+            <label for='user'>Name:</label><br>
+            <input type="text" name="user"><br>
+            <label for='mess_text'>Message:</label><br>
+            <textarea type="textarea" name="mess_text" rows="4" cols="50"></textarea><br>
+            <input type="submit" value="Post Message">
+        </form>
+        <hr>
+        <% if(typeof(errs) != 'undefined' ) { %>
+            <% for (var x in errs) { %>
+            <p><%= errs[x].message %></p>
+            <% } %>
+        <% } %>
+        <% for (var i = 0; i < messages.length; i++) { %>
+            <!--print contents of this message-->
+            <h4>Name: <%= messages[i].user %></h4>
+            <h4>Message: <%= messages[i].mess_text %></h4>
+            <!--comments for this message-->
+            <% for (var j = 0; j < messages[i]['comments'].length; j++) { %>
+                <p>Name: <%= messages[i]['comments'][j].user %></p>     
+                <p>Comment: <%= messages[i]['comments'][j].comm_text %></p>    
+                <p>~ ~ ~</p>
+            <% } %>
+            <!--adding a new comment to this message-->
+                <form action="/comment/new/<%= messages[i]._id %>" method="post">
+                    <label for='user'>Name:</label><br>
+                    <input type="text" name="user"><br>
+                    <label for='comm_text'>Comment:</label><br>
+                    <textarea type="textarea" name="comm_text" rows="2" cols="50"></textarea><br>
+                    <input type="submit" value="Post Comment">
+                </form>
+            <hr>
+        <% } %>
+        </div>
+    </body>
+</html>
